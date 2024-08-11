@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	// "os"
 )
 
 const (
@@ -23,11 +22,11 @@ func main() {
 	flag.Parse()
 
 	if *versionPtr {
-      fmt.Println(VERSION)
-	  os.Exit(0)
+		fmt.Println(VERSION)
+		os.Exit(0)
 	}
 
-    if *jsonPtr {
+	if *jsonPtr {
 		fmt.Println(PublicIPJson())
 	} else {
 		fmt.Println(getPublicIP())
@@ -37,16 +36,22 @@ func main() {
 
 func getPublicIP() (publicip string) {
 
-	response, err := http.Get("https://ifconfig.me")
-	if err != nil {
-		log.Fatal(err)
+	uris := []string{"https://ifconfig.me", "https://ipinfo.io/ip", "https://api.ipify.org"}
+
+	for _, uri := range uris {
+		response, err := http.Get(uri)
+		fmt.Println(uri)
+		if err != nil {
+			continue
+		}
+		body, _ := io.ReadAll(response.Body)
+		defer response.Body.Close() //always have to do this last
+
+		return string(body)
+
 	}
 
-	body, _ := io.ReadAll(response.Body)
-
-	defer response.Body.Close() //always have to do this last
-
-	return string(body)
+	return string("No internet access")
 }
 
 func PublicIPJson() (jsondata string) {
