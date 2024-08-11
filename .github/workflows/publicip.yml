@@ -1,4 +1,4 @@
-name: Go
+name: publicip
 
 on: [push]
 
@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Go 1.21.x
+      - name: Setup Go 1.22.6
         uses: actions/setup-go@v5
         with:
           # Semantic version range syntax or exact version of Go
