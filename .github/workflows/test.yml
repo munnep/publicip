@@ -1,6 +1,9 @@
 name: publicip
 
-on: [push]
+on:
+  push:
+    paths:
+      - main.go
 
 jobs:
   build:
