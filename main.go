@@ -40,7 +40,7 @@ func getPublicIP() (publicip string) {
 
 	for _, uri := range uris {
 		response, err := http.Get(uri)
-		fmt.Println(uri)
+		// fmt.Println(uri)
 		if err != nil {
 			continue
 		}
